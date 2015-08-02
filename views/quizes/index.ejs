@@ -2,9 +2,10 @@
 	<table width="100%">
 		<% for (var i=0;i < quizes.length; i++) { %>
 			<tr>
-				<td width="50%"><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
-				<td width="25%"><a href=""><button>Editar</button></a></td>
-				<td width="25%">
+				<td width="30%"><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+				<td width="30%"><%= quizes[i].tematica %></td>
+				<td width="20%"><a href="quizes/<%= quizes[i].id %>/edit"><button>Editar</button></a></td>
+				<td width="20%">
 					<form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
 						<button type="submit" onclick="return confirm('¿Borrar pregunta <%= quizes[i].pregunta %>?')">Borrar</button>
 					</form>
