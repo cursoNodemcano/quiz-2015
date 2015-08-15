@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var moment = require('moment');
 
 var routes = require('./routes/index');
 
@@ -39,6 +40,22 @@ app.use(function(req, res, next) {
     res.locals.session = req.session;
     next();
 });
+
+app.use(function(req, res, next) {
+
+    var diffMiliseconds = 0;
+    if (req.session.lastActionTime){
+        var now = moment();
+        diffMiliseconds = now.diff(req.session.lastActionTime) / 1000;
+    }
+    if (!req.path.match(/\/login|\/logout/) && req.session.user && diffMiliseconds > 120){
+        res.redirect('/logout/');
+    }else{
+        req.session.lastActionTime = moment();
+        next();
+    }
+});
+
 
 
 app.use('/', routes);
