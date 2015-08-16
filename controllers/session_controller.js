@@ -42,7 +42,15 @@ exports.create = function(req, res) {
 
 
 //GET (DELETE) /logout
-exports.destroy = function(req, res){
+exports.destroy = function(req, res) {
+
 	delete req.session.user;
-	res.redirect(req.session.redir.toString()); //redireccion a la pagina anterior a logout
+	if (req.query.auto){
+	    res.render('message', {
+	    	message: 'Sesion caducada. Ha excedido el tiempo de inactividad'
+	    });
+	}else{
+		res.redirect(req.session.redir.toString()); //redireccion a la pagina anterior a logout
+	}
 }
+

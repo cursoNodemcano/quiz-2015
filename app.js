@@ -49,7 +49,7 @@ app.use(function(req, res, next) {
         diffMiliseconds = now.diff(req.session.lastActionTime) / 1000;
     }
     if (!req.path.match(/\/login|\/logout/) && req.session.user && diffMiliseconds > 120){
-        res.redirect('/logout/');
+        res.redirect('/logout/?auto=1');
     }else{
         req.session.lastActionTime = moment();
         next();
